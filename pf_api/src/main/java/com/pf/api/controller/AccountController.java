@@ -38,18 +38,17 @@ public class AccountController {
 	@Autowired
 	AccountService accountService;
 	
-	@ResponseBody
-	@GetMapping("/login")
-	public Map<String,Object> login(Map<String, Object> list)
-	{
-		Map<String,Object> resultmap = new HashMap<String,Object>();
-		
-		resultmap.put("code","1000");
-		resultmap.put("result", "ERR");
-		resultmap.put("message", "로그인 되지 않음");
-		
-		return resultmap;
-	}
+	/*
+	 * @ResponseBody
+	 * 
+	 * @GetMapping("/login") public Map<String,Object> login(Map<String, Object>
+	 * list) { Map<String,Object> resultmap = new HashMap<String,Object>();
+	 * 
+	 * resultmap.put("code","1000"); resultmap.put("result", "ERR");
+	 * resultmap.put("message", "로그인 되지 않음");
+	 * 
+	 * return resultmap; }
+	 */
 	
 	
 	@ResponseBody

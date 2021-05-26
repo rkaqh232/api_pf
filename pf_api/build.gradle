@@ -7,8 +7,8 @@ plugins {
 }
 //for war
 bootWar{
-	archiveBaseName='pf_api'
-	archiveVersion="0.0.1"
+	archiveBaseName='ROOT'
+	archiveVersion=""
 }
 
 group = 'com.pf'
