@@ -50,7 +50,7 @@ public class AccountController {
 	 * return resultmap; }
 	 */
 	  
-	//testtest
+	//test
 	@ResponseBody
 	@PostMapping("/login_exec")
     public Map<String,Object> loginExec(@RequestBody @Valid AccountForm.Login form, BindingResult bindingResult, HttpServletResponse response) throws Exception 
