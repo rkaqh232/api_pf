@@ -1,0 +1,101 @@
+plugins {
+	id 'org.springframework.boot' version '2.5.0'
+	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+	id 'org.asciidoctor.convert' version '1.5.8'
+	id 'java'
+	id 'war' //for war
+}
+//for war
+bootWar{
+	archiveBaseName='pf_api'
+	archiveVersion="0.0.1"
+}
+
+group = 'com.pf'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+ext {
+	set('snippetsDir', file("build/generated-snippets"))
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.4'
+	implementation 'org.springframework.session:spring-session-core'
+	implementation 'org.springframework.session:spring-session-jdbc'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	compileOnly 'mysql:mysql-connector-java'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+	testImplementation 'org.springframework.security:spring-security-test'
+
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:2.5.1'
+	//implementation 'com.github.zhanhb:thymeleaf-layout-dialect:2.5.1'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	implementation 'javax.servlet:jstl:1.2'
+	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
+	
+	implementation 'commons-beanutils:commons-beanutils:1.9.4'
+	
+	implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
+
+	implementation 'com.google.code.gson:gson:2.8.6'
+	
+	implementation group: 'cglib', name: 'cglib', version: '2.2.2'
+	
+	implementation 'org.jsoup:jsoup:1.13.1'
+	
+	implementation group: 'org.dom4j', name: 'dom4j', version: '2.1.0'
+
+	compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
+	
+	compile 'org.apache.poi:poi-ooxml:4.1.1'
+	
+	//Swagger 2 
+	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+	 
+	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+
+
+	//implementation 'org.apache.commons:commons-text:1.8' //xss
+
+	//for war
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+}
+
+ext['tomcat.version'] = '9.0.40'
+test {
+	outputs.dir snippetsDir
+	useJUnitPlatform()
+}
+
+asciidoctor {
+	inputs.dir snippetsDir
+	dependsOn test
+}
+
+bootRun {
+    String activeProfile = System.properties['spring.profiles.active']
+    systemProperty "spring.profiles.active", activeProfile
+}
