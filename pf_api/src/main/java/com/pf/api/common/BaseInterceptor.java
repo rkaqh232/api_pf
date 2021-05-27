@@ -38,7 +38,7 @@ public class BaseInterceptor implements HandlerInterceptor {
 		
 		if(request.getRequestURI().toString().equals(request.getContextPath()+"/") || request.getRequestURI().toString().equals(request.getContextPath()+"/user") || request.getRequestURI().toString().equals(request.getContextPath()+"/user/"))
 		{
-			response.sendRedirect(request.getContextPath()+"/user/login");
+			response.sendRedirect(request.getContextPath()+"/login_exec");
 			return false;
 		}
 		

@@ -16,10 +16,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pf.api.dto.AccountForm;
@@ -52,10 +51,11 @@ public class AccountController {
 	  
 	//test
 	@ResponseBody
-	@PostMapping("/login_exec")
-    public Map<String,Object> loginExec(@RequestBody @Valid AccountForm.Login form, BindingResult bindingResult, HttpServletResponse response) throws Exception 
-    {
+	@RequestMapping(value="/login_exec", method = {RequestMethod.GET, RequestMethod.POST})
+    public Map<String,Object> loginExec(@RequestBody(required = false) @Valid AccountForm.Login form, BindingResult bindingResult, HttpServletResponse response) throws Exception 
+    {	
 		Map<String,Object> resultmap = new HashMap<String,Object>();
+		if(form != null)
 		log.info(form.toString());
 		
 		resultmap.put("code","");
@@ -64,16 +64,22 @@ public class AccountController {
 		
     	//Cookie cookie = new Cookie("save_login_id_key","");
     	//cookie.setPath("/");
-    	
-    	if (bindingResult.hasErrors()) {
+		
+    	if (bindingResult.hasErrors() || form == null) {
     		resultmap.replace("code","1000");
     		resultmap.replace("result", "ERR");
-    		resultmap.replace("message", bindingResult.getAllErrors().toString());
+    		if(form == null) 
+    			resultmap.replace("message", "form is null");
+    		else
+    			resultmap.replace("message", bindingResult.getAllErrors().toString());
+    		
 			//cookie.setMaxAge(0);
 			//response.addCookie(cookie);
     		log.info(bindingResult.getAllErrors().toString());
     		return resultmap;
     	}
+    	
+    	
     	//cookie = new Cookie("save_login_id_key", (String)list.get("name"));    	
 
     	UsernamePasswordAuthenticationToken loginToken = null;
