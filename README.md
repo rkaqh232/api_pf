@@ -9,9 +9,4 @@ thymeleaf
 mybatis  
 mysql 5.7  
 
-### db
-3.37.99.93  
-aweseloper  
-dudals@3  
-
 
